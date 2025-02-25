@@ -7,5 +7,6 @@ resources:
 namespace: guestbook-ab-test-a
 
 images:
-- name: ${{ vars.image }}
-  newTag: ${{ imageFrom(vars.image).Tag }}
+- name: YOUR_IMAGE_NAME
+  newName: ${IMAGE_NAME}
+  newTag: ${IMAGE_TAG}

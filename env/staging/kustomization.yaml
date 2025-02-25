@@ -5,3 +5,7 @@ resources:
 - ../../base
 
 namespace: guestbook-staging
+
+images:
+- name: ${{ vars.image }}
+  newTag: ${{ imageFrom(vars.image).Tag }}

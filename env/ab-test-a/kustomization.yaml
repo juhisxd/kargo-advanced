@@ -5,3 +5,7 @@ resources:
 - ../../base
 
 namespace: guestbook-ab-test-a
+
+images:
+- name: ${{ vars.image }}
+  newTag: ${{ imageFrom(vars.image).Tag }}

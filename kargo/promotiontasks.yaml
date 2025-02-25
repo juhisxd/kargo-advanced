@@ -19,7 +19,6 @@ spec:
       repoURL: ${{ vars.repoURL }}
       checkout:
       - commit: ${{ commitFrom(vars.repoURL).ID }}
-        path: ./src
       - branch: main
         path: ./out
         # Create the branch if it does not exist.
@@ -36,7 +35,7 @@ spec:
   - uses: kustomize-set-image
     as: update-image
     config:
-      path: ./src/env/${{ ctx.stage }}
+      path: ./env/${{ ctx.stage }}
       images:
       - image: ${{ vars.image }}
         tag: ${{ imageFrom(vars.image).Tag}}
@@ -44,7 +43,7 @@ spec:
   # overlay to the ./out directory.
   - uses: kustomize-build
     config:
-      path: ./src/env/${{ ctx.stage }}
+      path: /env/${{ ctx.stage }}
       outPath: ./out
   # Commit the changes to the Git repository.
   - uses: git-commit

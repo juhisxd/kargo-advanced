@@ -20,7 +20,7 @@ spec:
       checkout:
       - commit: ${{ commitFrom(vars.repoURL).ID }}
         path: ./src
-      - branch: env/${{ ctx.stage }}
+      - branch: main
         path: ./out
         # Create the branch if it does not exist.
         create: true
@@ -28,9 +28,9 @@ spec:
   # ./out directory to ensure that we only have the files that are
   # rendered from the Kustomize configuration in the ./src directory
   # of the repository after being rendered.
-  - uses: git-clear
-    config:
-      path: ./out
+  #- uses: git-clear
+  #  config:
+  #    path: ./out
   # Update the image in the Kustomize configuration located at ./src/env/<stage>
   # in the repository.
   - uses: kustomize-set-image
@@ -62,6 +62,7 @@ spec:
     config:
       apps:
       - name: guestbook-${{ ctx.stage }}
+        namespace: argocd
         sources:
         - repoURL: ${{ vars.repoURL }}
           desiredRevision: ${{ task.outputs['commit'].commit }}

@@ -19,7 +19,8 @@ spec:
       repoURL: ${{ vars.repoURL }}
       checkout:
       - commit: ${{ commitFrom(vars.repoURL).ID }}
-      - branch: main
+        path: ./src
+      - branch: env/${{ ctx.stage }}
         path: ./out
         # Create the branch if it does not exist.
         create: true
@@ -27,15 +28,15 @@ spec:
   # ./out directory to ensure that we only have the files that are
   # rendered from the Kustomize configuration in the ./src directory
   # of the repository after being rendered.
-  #- uses: git-clear
-  #  config:
-  #    path: ./out
+  - uses: git-clear
+    config:
+      path: ./out
   # Update the image in the Kustomize configuration located at ./src/env/<stage>
   # in the repository.
   - uses: kustomize-set-image
     as: update-image
     config:
-      path: ./env/${{ ctx.stage }}
+      path: ./src/env/${{ ctx.stage }}
       images:
       - image: ${{ vars.image }}
         tag: ${{ imageFrom(vars.image).Tag}}
@@ -43,7 +44,7 @@ spec:
   # overlay to the ./out directory.
   - uses: kustomize-build
     config:
-      path: /env/${{ ctx.stage }}
+      path: ./src/env/${{ ctx.stage }}
       outPath: ./out
   # Commit the changes to the Git repository.
   - uses: git-commit
@@ -55,13 +56,13 @@ spec:
   - uses: git-push
     config:
       path: ./out
-  # Request a sync of the ArgoCD Application to apply the changes from the
-  # commit.
-  - uses: argocd-update
-    config:
-      apps:
-      - name: guestbook-${{ ctx.stage }}
-        namespace: argocd
-        sources:
-        - repoURL: ${{ vars.repoURL }}
-          desiredRevision: ${{ task.outputs['commit'].commit }}
+    # Request a sync of the ArgoCD Application to apply the changes from the
+    # commit.
+#  - uses: argocd-update
+#    config:
+#      apps:
+#      - name: guestbook-${{ ctx.stage }}
+#        namespace: argocd
+#        sources:
+#        - repoURL: ${{ vars.repoURL }}
+#          desiredRevision: ${{ task.outputs['commit'].commit }}

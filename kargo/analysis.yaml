@@ -15,4 +15,7 @@ spec:
     provider:
       web:
         url: http://{{args.stage}}.guestbook.juho.relex.software/env
+        headers:
+          - key: Content-Type
+            value: application/json
         jsonPath: "{$.HOSTNAME}"

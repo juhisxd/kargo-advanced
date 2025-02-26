@@ -4,7 +4,6 @@ metadata:
   name: guestbook
 spec:
   replicas: 1
-  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: guestbook
@@ -17,5 +16,30 @@ spec:
       - image: ghcr.io/juhisxd/guestbook:latest
         name: guestbook
         ports:
-        - name: http
-          containerPort: 3000
+        - containerPort: 80
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+      volumes:
+      - name: data-volume
+        configMap:
+          name: guestbook-data
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: guestbook-data
+data:
+  db.json: |
+    {
+      "posts": [
+        { "id": 1, "title": "guestbook", "author": "typicode" }
+      ],
+      "comments": [
+        { "id": 1, "body": "some comment", "postId": 1 }
+      ],
+      "profile": {
+        "name": "typicode"
+      }
+    }
+---

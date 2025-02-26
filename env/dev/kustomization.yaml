@@ -11,5 +11,11 @@ images:
   newName: ${IMAGE_NAME}
   newTag: ${IMAGE_TAG}
 
-hostnames:
-  - "dev.guestbook.juho.relex.software"
+patches:
+- target:
+    kind: HTTPRoute
+    name: guestbook-route
+  patch: |-
+    - op: replace
+      path: /spec/hostnames/0
+      value: dev.guestbook.juho.relex.software

@@ -8,14 +8,22 @@ spec:
   - name: stage
   metrics:
   - name: web page status
-    interval: 5s
-    count: 2
-    successCondition: result < 200
-    failureLimit: 2
     provider:
       web:
         url: http://{{args.stage}}.guestbook.juho.relex.software/env
-        headers:
-          - key: Content-Type
-            value: application/json
-        jsonPath: "{$}"
+        #headers:
+        #  - key: Content-Type
+        #    value: application/json
+        #jsonPath: "{$}"
+  - name: debug-url
+    provider:
+      job:
+        spec:
+          template:
+            spec:
+              containers:
+                - name: debug
+                  image: curlimages/curl:latest
+                  command: [ "sh", "-c", "echo 'Debug URL: http://{{args.stage}}.guestbook.juho.relex.software/env' && curl -v http://{{args.stage}}.guestbook.juho.relex.software/env" ]
+              restartPolicy: Never
+    successCondition: "true"

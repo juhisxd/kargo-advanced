@@ -17,12 +17,12 @@ spec:
       steps:
       - task:
           name: promote
-#  verification:
-#    analysisTemplates:
-#      - name: web-page-status
-#    args:
-#      - name: stage
-#        value: dev
+  verification:
+    analysisTemplates:
+      - name: web-page-status
+    args:
+      - name: stage
+        value: dev
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage

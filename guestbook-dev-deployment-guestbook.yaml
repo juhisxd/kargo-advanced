@@ -5,6 +5,7 @@ metadata:
   namespace: guestbook-dev
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: guestbook
@@ -14,14 +15,8 @@ spec:
         app: guestbook
     spec:
       containers:
-      - image: ghcr.io/juhisxd/guestbook:v1.4.0
+      - image: ghcr.io/juhisxd/guestbook:v1.0.0
         name: guestbook
         ports:
-        - containerPort: 80
-        volumeMounts:
-        - mountPath: /data
-          name: data-volume
-      volumes:
-      - configMap:
-          name: guestbook-data
-        name: data-volume
+        - containerPort: 3000
+          name: http

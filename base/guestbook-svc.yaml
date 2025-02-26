@@ -4,7 +4,7 @@ metadata:
   name: guestbook
 spec:
   selector:
-    app: guestbooks
+    app: guestbook
   ports:
     - name: http
       port: 80

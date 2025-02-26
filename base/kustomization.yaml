@@ -7,3 +7,4 @@ resources:
 - guestbook-ns.yaml
 - guestbook-deploy.yaml
 - guestbook-svc.yaml
+- guestbook-http-route.yaml

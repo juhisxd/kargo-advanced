@@ -9,10 +9,27 @@ spec:
   metrics:
   - name: web page status
     interval: 5s
-    count: 5
-    successCondition: result < 200
-    failureLimit: 3
+    count: 2
+    successCondition: result.statusCode < 200
+    failureLimit: 2
     provider:
       web:
         url: http://{{args.stage}}.guestbook.juho.relex.software
+        timeoutSeconds: 10
         jsonPath: "{$}"
+        headers:
+          - key: Content-Type
+            value: application/json
+        responseJsonPath: "$"  # This will capture the entire JSON response
+  - name: integration-test
+    provider:
+      job:
+        spec:
+          template:
+            spec:
+              containers:
+              - name: sleep
+                image: alpine:latest
+                command: [sleep, "10"]
+              restartPolicy: Never
+          backoffLimit: 1

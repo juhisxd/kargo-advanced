@@ -93,6 +93,11 @@ spec:
     sources:
       stages:
       - ab-test-a
+  promotionTemplate:
+    spec:
+      steps:
+      - task:
+          name: promote
   verification:
     analysisTemplates:
       - name: web-page-status

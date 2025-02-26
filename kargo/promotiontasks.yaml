@@ -18,7 +18,7 @@ spec:
     config:
       repoURL: ${{ vars.repoURL }}
       checkout:
-      - commit: ${{ commitFrom(vars.repoURL).ID }}
+      - branch: ${{ vars.branch }}
         path: ./src
       - branch: env/${{ ctx.stage }}
         path: ./out
@@ -58,11 +58,11 @@ spec:
       path: ./out
     # Request a sync of the ArgoCD Application to apply the changes from the
     # commit.
-#  - uses: argocd-update
-#    config:
-#      apps:
-#      - name: guestbook-${{ ctx.stage }}
-#        namespace: argocd
-#        sources:
-#        - repoURL: ${{ vars.repoURL }}
-#          desiredRevision: ${{ task.outputs['commit'].commit }}
+  - uses: argocd-update
+    config:
+      apps:
+      - name: guestbook-${{ ctx.stage }}
+        namespace: argocd
+        sources:
+        - repoURL: ${{ vars.repoURL }}
+          desiredRevision: ${{ task.outputs['commit'].commit }}

@@ -9,6 +9,6 @@ spec:
       repoURL: ghcr.io/juhisxd/guestbook
       imageSelectionStrategy: SemVer
       allowTags: ^v?[0-9]+\.[0-9]+\.[0-9]+([\+-].*)?$
-  - git:
-      repoURL: https://github.com/juhisxd/kargo-advanced.git
-      branch: main
+#  - git:
+#      repoURL: https://github.com/juhisxd/kargo-advanced.git
+#      branch: main

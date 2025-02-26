@@ -15,7 +15,14 @@ spec:
         app: guestbook
     spec:
       containers:
-      - image: ghcr.io/juhisxd/guestbook:v1.0.0
+      - env:
+        - name: RESPONSE_FORMAT
+          value: json
+        - name: CONTENT_TYPE
+          value: application/json
+        - name: ENABLE_JSON_RESPONSE
+          value: "true"
+        image: ghcr.io/juhisxd/guestbook:v1.0.0
         name: guestbook
         ports:
         - containerPort: 3000

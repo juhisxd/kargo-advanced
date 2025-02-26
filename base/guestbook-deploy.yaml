@@ -19,10 +19,3 @@ spec:
         ports:
         - name: http
           containerPort: 3000
-        env:
-        - name: RESPONSE_FORMAT
-          value: "json"
-        - name: CONTENT_TYPE
-          value: "application/json"
-        - name: ENABLE_JSON_RESPONSE
-          value: "true"

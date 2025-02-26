@@ -7,9 +7,8 @@ resources:
 namespace: guestbook-dev
 
 images:
-- name: YOUR_IMAGE_NAME
-  newName: ${IMAGE_NAME}
-  newTag: ${IMAGE_TAG}
+- name: ${{ vars.image }}
+  newTag: ${{ imageFrom(vars.image).Tag }}
 
 patches:
 - target:

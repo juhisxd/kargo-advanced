@@ -9,3 +9,12 @@ namespace: guestbook-staging
 images:
 - name: ${{ vars.image }}
   newTag: ${{ imageFrom(vars.image).Tag }}
+
+patches:
+- target:
+    kind: HTTPRoute
+    name: guestbook-route
+  patch: |-
+    - op: replace
+      path: /spec/hostnames/0
+      value: staging.guestbook.juho.relex.software

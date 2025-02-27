@@ -9,4 +9,4 @@ spec:
     port: 80
     targetPort: http
   selector:
-    app: guestbooks
+    app: guestbook
